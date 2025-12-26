@@ -10,4 +10,4 @@ target_link_libraries(SukiGame
     SukiEngine
 )
 
-# target_compile_features(SukiGame PRIVATE cxx_std_13)
+target_compile_features(SukiGame PRIVATE cxx_std_17)

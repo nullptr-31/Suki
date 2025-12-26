@@ -1,3 +1,5 @@
+add_subdirectory(vendor/glfw)
+
 add_library(SukiEngine STATIC)
 
 target_sources(SukiEngine
@@ -10,7 +12,11 @@ target_include_directories(SukiEngine
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# target_compile_features(SukiEngine PUBLIC cxx_std_13)
+target_link_libraries(SukiEngine
+  PUBLIC glfw
+)
+
+target_compile_features(SukiEngine PUBLIC cxx_std_17)
 
 if (MSVC)
   target_compile_options(SukiEngine PRIVATE /W4)
