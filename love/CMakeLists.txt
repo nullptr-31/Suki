@@ -9,5 +9,3 @@ target_link_libraries(SukiGame
   PRIVATE
     SukiEngine
 )
-
-target_compile_features(SukiGame PRIVATE cxx_std_17)

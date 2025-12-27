@@ -1,11 +1,12 @@
-#include <iostream>
-
-#include "suki/engine.h"
+#include "Suki.h"
 
 int main()
 {
-    SukiEngine::Engine engine;
-    std::cout << "Version: " << engine.version() << std::endl;
+    Suki::ApplicationSpecs specs;
+    specs.Name = "LOVE the Game";
+    specs.Author = "Soumia & Abdelbaki";
+
+    Suki::Application app(specs);
 
     return 0;
 }

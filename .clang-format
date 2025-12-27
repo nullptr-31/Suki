@@ -1,6 +1,7 @@
 Language: Cpp
 BasedOnStyle: Google
-AccessModifierOffset: -1
+AccessModifierOffset: -4
+IndentAccessModifiers: false
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: None
 AlignOperands: Align
@@ -16,8 +17,6 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: true
-
-# Linux kernel style braces
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
@@ -30,13 +29,12 @@ BraceWrapping:
   AfterUnion: true
   AfterExternBlock: true
   BeforeCatch: true
-  BeforeElse: false       # Keep else on the same line as previous closing brace
+  BeforeElse: false
   BeforeLambdaBody: true
   IndentBraces: false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
-
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
@@ -55,12 +53,8 @@ IndentWidth: 4
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
 PointerAlignment: Left
 ReflowComments: false
-
-# Remove extra spacing to match Linux kernel style
 SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
@@ -68,7 +62,7 @@ SpaceBeforeAssignmentOperators: true
 SpaceBeforeCpp11BracedList: false
 SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: Never        # No space after if/for/while parentheses
+SpaceBeforeParens: Never
 SpaceBeforeRangeBasedForLoopColon: true
 SpaceBeforeSquareBrackets: false
 SpaceInEmptyParentheses: false
@@ -78,7 +72,6 @@ SpacesInCStyleCastParentheses: false
 SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-
 Standard: c++17
 TabWidth: 4
 UseTab: Never
