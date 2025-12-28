@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 # Add GLFW subdirectory
 add_subdirectory(vendor/glfw)
+add_subdirectory(vendor/spdlog)
 
 # Find OpenGL
 find_package(OpenGL REQUIRED)
@@ -10,10 +11,16 @@ find_package(OpenGL REQUIRED)
 add_library(SukiEngine STATIC)
 
 # Add source files
+file(GLOB_RECURSE SUKI_ENGINE_SRC
+    CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
+)
+
 target_sources(SukiEngine
-  PRIVATE
-    src/Suki/Core/Application.cpp
-    vendor/glad/src/glad.c
+    PRIVATE
+        ${SUKI_ENGINE_SRC}
+        vendor/glad/src/glad.c
 )
 
 # Public include directories (accessible to projects using SukiEngine)
@@ -33,6 +40,7 @@ target_link_libraries(SukiEngine
   PUBLIC 
     glfw
     OpenGL::GL
+    spdlog::spdlog
 )
 
 # Require C++17

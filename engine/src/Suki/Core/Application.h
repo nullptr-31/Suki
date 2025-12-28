@@ -1,6 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <memory>
+
+#include <Suki/Core/Window.h>
 
 namespace Suki
 {
@@ -20,11 +22,17 @@ public:
     static Application& Get() { return *s_Instance; }
     const ApplicationSpecs GetSpecs() const { return m_Specs; }
 
+    Window& GetWindow() { return *m_Window; }
+
+    void Run();
     void Close();
 
 private:
-    bool m_Running = true;
     ApplicationSpecs m_Specs;
+    std::unique_ptr<Window> m_Window;
+    bool m_Running = true;
+
+private:
     static Application* s_Instance;
 };
 
