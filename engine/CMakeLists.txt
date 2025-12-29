@@ -33,6 +33,7 @@ target_include_directories(SukiEngine
 target_include_directories(SukiEngine
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm
 )
 
 # Link libraries
