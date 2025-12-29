@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include "Suki/Event/ApplicationEvent.h"
+#include "Suki/Event/Event.h"
 
 #include <Suki/Core/Window.h>
 
@@ -19,12 +21,17 @@ public:
     Application(const ApplicationSpecs& specs);
     ~Application();
 
+    void OnEvent(Event& event);
+
     static Application& Get() { return *s_Instance; }
     const ApplicationSpecs GetSpecs() const { return m_Specs; }
 
     Window& GetWindow() { return *m_Window; }
 
     void Run();
+    bool OnWindowClose(WindowCloseEvent& event);
+    bool OnWindowResize(WindowResizeEvent& event);
+
     void Close();
 
 private:

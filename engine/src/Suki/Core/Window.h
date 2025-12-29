@@ -1,8 +1,10 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <string>
+#include "Suki/Event/Event.h"
 
 namespace Suki
 {
@@ -28,6 +30,9 @@ public:
 
     virtual uint32_t GetWidth() const = 0;
     virtual uint32_t GetHeight() const = 0;
+
+    virtual void SetEventCallback(
+        const std::function<void(Event&)>& callback) = 0;
 
     virtual void* GetNativeWindow() const = 0;
 

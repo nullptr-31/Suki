@@ -1,7 +1,9 @@
 #include "Platform/NativeWindow/NativeWindow.h"
-#include <GL/gl.h>
-#include "GLFW/glfw3.h"
+
+#include "Platform/OpenGL/OpenGLContext.h"
+#include "Suki/Core/Assert.h"
 #include "Suki/Core/Logger.h"
+#include "Suki/Event/ApplicationEvent.h"
 
 namespace Suki
 {
@@ -20,27 +22,49 @@ NativeWindow::~NativeWindow()
 
 void NativeWindow::Init(const WindowSpecs& specs)
 {
-    m_WindowSpecs.Title = specs.Title;
-    m_WindowSpecs.Width = specs.Width;
-    m_WindowSpecs.Height = specs.Height;
+    m_Data.Title = specs.Title;
+    m_Data.Width = specs.Width;
+    m_Data.Height = specs.Height;
 
     SK_CORE_INFO("Initializing NativeWindow {0}", specs.Title);
 
     if(s_GLFWWindowCount == 0)
     {
-        if(glfwInit())
-            SK_CORE_INFO("GLFW Initialized");
-        else
-            SK_CRITICAL("GLFW Initialization Failed");
+        int result = glfwInit();
+        SK_ASSERT_MSG(result, "Failed to inialize GLFW");
     }
 
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-    m_Window =
-        glfwCreateWindow((int)m_WindowSpecs.Width, (int)m_WindowSpecs.Height,
-                         m_WindowSpecs.Title.c_str(), NULL, NULL);
+    m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height,
+                                m_Data.Title.c_str(), NULL, NULL);
     s_GLFWWindowCount++;
 
-    glfwMakeContextCurrent(m_Window);
+    m_Context = GraphicsContext::Create(m_Window);
+    m_Context->Init();
+
+    glfwSetWindowUserPointer(m_Window, &m_Data);
+
+    glfwSetWindowSizeCallback(
+        m_Window,
+        [](GLFWwindow* window, int width, int height)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.Width = width;
+            data.Height = height;
+
+            WindowResizeEvent event(width, height);
+            data.EventCallback(event);
+        });
+
+    glfwSetWindowCloseCallback(
+        m_Window,
+        [](GLFWwindow* window)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            WindowCloseEvent event;
+            data.EventCallback(event);
+        });
 }
 
 void NativeWindow::Shutdown()
@@ -57,11 +81,9 @@ void NativeWindow::Shutdown()
 
 void NativeWindow::OnUpdate()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glfwSwapBuffers(m_Window);
-
     glfwPollEvents();
+
+    m_Context->SwapBuffers();
 }
 
 }  // namespace Suki
