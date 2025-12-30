@@ -30,7 +30,7 @@ public:
 
     void Run();
     bool OnWindowClose(WindowCloseEvent& event);
-    bool OnWindowResize(WindowResizeEvent& event);
+    bool OnWindowResize(WindowResizeEvent& e);
 
     void Close();
 
