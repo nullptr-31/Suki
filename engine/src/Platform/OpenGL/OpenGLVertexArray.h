@@ -23,7 +23,8 @@ public:
     virtual void SetIndexBuffer(
         const std::shared_ptr<IndexBuffer>& buffer) override;
 
-    virtual const std::vector<VertexBuffer>& GetVertexBuffers() const override
+    virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers()
+        const override
     {
         return m_VertexBuffers;
     }
@@ -36,7 +37,7 @@ public:
 private:
     uint32_t m_RendererID;
     uint32_t m_VertexBufferIndex = 0;
-    std::vector<VertexBuffer> m_VertexBuffers;
+    std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
     std::shared_ptr<IndexBuffer> m_IndexBuffer;
 };
 
