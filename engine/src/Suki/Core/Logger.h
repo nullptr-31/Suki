@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "spdlog/spdlog.h"
 
 namespace Suki
@@ -12,11 +13,15 @@ public:
 
     static std::shared_ptr<spdlog::logger>& GetCoreLogger()
     {
+        if(s_CoreLogger == nullptr)
+            std::cerr << "Make sure to call Logger::Init()" << std::endl;
         return s_CoreLogger;
     }
 
     static std::shared_ptr<spdlog::logger>& GetClientLogger()
     {
+        if(s_ClientLogger == nullptr)
+            std::cerr << "Make sure to call Logger::Init()" << std::endl;
         return s_ClientLogger;
     }
 

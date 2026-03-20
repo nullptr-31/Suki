@@ -8,7 +8,7 @@ int main()
     Suki::ApplicationSpecs specs;
     Suki::Application* app = new Suki::Application(specs);
 
-    // app->Run();
+    app->Run();
 
     delete app;
 
