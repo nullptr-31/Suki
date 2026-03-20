@@ -35,11 +35,31 @@ void NativeWindow::Init(const WindowSpecs &specs)
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
     m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height,
                                 m_Data.Title.c_str(), NULL, NULL);
+    SK_ASSERT_MSG(m_Window, "Failed to create GLFW Window");
+
     s_GLFWWindowCount++;
+
     m_Context = GraphicsContext::Create(m_Window);
     m_Context->Init();
 
     glfwSetWindowUserPointer(m_Window, &m_Data);
+
+    glfwSetWindowSizeCallback(m_Window,
+                              [](GLFWwindow *window, int width, int height)
+                              {
+                                  WindowData &data = *static_cast<WindowData *>(
+                                      glfwGetWindowUserPointer(window));
+                                  data.Width = width;
+                                  data.Height = height;
+                              });
+
+    glfwSetWindowCloseCallback(
+        m_Window,
+        [](GLFWwindow *window)
+        {
+            WindowData &data =
+                *static_cast<WindowData *>(glfwGetWindowUserPointer(window));
+        });
 }
 
 void NativeWindow::Shutdown()
